@@ -1,0 +1,24 @@
+local TweenService = game:GetService("TweenService")
+
+local GoProperties = {
+
+	Position = Vector3.new(-63.5, 83, 303.492)
+
+}
+
+local ComeProperties = {
+
+	Position = Vector3.new(-63.5, 83, 199.492)
+
+}
+
+
+local info = TweenInfo.new(3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
+local goAnim = TweenService:Create(script.Parent, info, GoProperties)
+local comeAnim = TweenService:Create(script.Parent, info, ComeProperties)
+
+while wait(3) do
+	goAnim:Play()
+	wait(3)
+	comeAnim:Play()
+end

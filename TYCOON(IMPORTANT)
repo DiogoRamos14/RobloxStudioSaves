@@ -1,0 +1,79 @@
+-- AutoDropper parts:
+
+script.Parent.Touched:Connect(function(hit)
+	if hit.Parent == workspace.NewBlocks then
+		local cashShower = script.Parent.CashShower
+		local cashViewer = workspace.CashViewer.MainPart.SurfaceGui.Remaining
+		cashShower.Value += hit:FindFirstChild("Worth").Value
+		cashViewer.Value = cashShower.Value 
+		hit:Destroy()
+	end
+end)
+
+-- DropperButton:
+
+local clickdetector = script.Parent
+local spawner = workspace.Dropper.Spawner
+local block = game.ReplicatedStorage.Blocks.DonutTest -- Change "Block" to whatever you named your mesh/part that you want to drop.
+local db = false
+
+clickdetector.MouseClick:Connect(function()
+	if not db then
+		local clone = block:Clone()
+		db = true
+		clone.Parent = workspace.NewBlocks
+		clone.Position = spawner.Position
+		
+		wait(0.2)
+		
+		db = false
+	end
+end)
+
+-- ReplicatedStorage Block:
+
+script.Parent.Touched:Connect(function(hit)
+	if hit.Parent == workspace.NewBlocks then
+		local cashShower = script.Parent.CashShower
+		local cashViewer = workspace.CashViewer.MainPart.SurfaceGui.Remaining
+		cashShower.Value += hit:FindFirstChild("Worth").Value
+		cashViewer.Value = cashShower.Value 
+		hit:Destroy()
+	end
+end)    
+
+-- SpawnHandler:
+local Players = game:GetService("Players")
+
+local PurcharsedItem = workspace.tycoon1.AutoDropper
+local PurcharsedSpawner = script.Parent
+local Spawner = PurcharsedItem.Spawner --Only for Droppers
+	
+local PricePart = PurcharsedSpawner.Price
+local Price = PricePart.PriceGui.PriceValue
+local PriceGui = PricePart.PriceGui.PriceText
+PriceGui.Text = "$"..Price.Value
+local ScriptStarter = PurcharsedItem.DropHandler
+
+local function onHit(Hit)
+	local tycoon = workspace.tycoon1
+	
+	local player = Players:GetPlayerFromCharacter(Hit.Parent)
+	if not player then return end
+	if tycoon.Owner.Value == player then 
+		if player.leaderstats.Money.Value >= 100 then
+			player.leaderstats.Money.Value -= 100
+			for _, Child in ipairs(PurcharsedItem:GetChildren()) do
+				if Child:IsA("Part") then 
+					Child.Transparency = 0
+					Child.CanCollide = true
+					Spawner.Transparency = 0.45
+					ScriptStarter.Enabled = true
+					PurcharsedSpawner:Destroy()
+				end
+			end
+		end
+	end
+end
+
+PurcharsedSpawner.Touched:Connect(onHit)

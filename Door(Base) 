@@ -1,0 +1,31 @@
+local TweenService = game:GetService("TweenService")
+local part = script.Parent
+local botaoClick = script.Parent.Parent.Botao.ClickDetector
+local aberto = false
+
+
+local TweeningInfo = TweenInfo.new(5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
+	
+	local GoProperties = {
+
+	Position = Vector3.new(141, 0.5, 79.25)
+
+	}
+
+	local ComeProperties = {
+
+	Position = Vector3.new(141, 0.5, 130)
+
+	}
+
+	local goAnim = TweenService:Create(script.Parent, TweeningInfo, GoProperties)
+	local comeAnim = TweenService:Create(script.Parent,TweeningInfo, ComeProperties)
+
+	while wait(6) do
+		goAnim:Play()
+		wait(6)
+		comeAnim:Play()
+	end
+
+-- Promt/ClickDetector. If Promt then change line 3 to ".ProximityPromt"
+-- Create a button with ClicPromt/ClickDetector.

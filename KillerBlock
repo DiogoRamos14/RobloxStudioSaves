@@ -1,0 +1,8 @@
+function tu(h)
+	local hum = h.Parent:FindFirstChild("Humanoid")
+	if hum ~= nil then
+		hum.Health = 0
+	end
+end
+
+script.Parent.Touched:Connect(tu)
